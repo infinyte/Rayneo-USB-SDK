@@ -32,8 +32,12 @@ public sealed class HeadOrientationFilter
     /// <summary>Current head yaw in degrees (gyro-integrated, drifts over time).</summary>
     public float YawDegrees => _yawDegrees;
 
-    /// <summary>Ticks per second of the device tick counter — calibrate against wall time on first use.</summary>
-    public float TickRateHz { get; set; } = 1000f;
+    /// <summary>
+    /// Ticks per second of the device tick counter. Measured against wall time
+    /// on a live Air 4 Pro (calibrate subcommand): three runs read 10001, 10002,
+    /// and 10004 Hz — a clean 10 kHz counter. Override per-device if needed.
+    /// </summary>
+    public float TickRateHz { get; set; } = 10000f;
 
     /// <summary>Feed a new IMU sample into the filter.</summary>
     public void Update(in RayNeoImuSample sample)
@@ -55,13 +59,18 @@ public sealed class HeadOrientationFilter
 
         // Gravity-referenced angles from the accelerometer. Axis convention
         // observed on the Air 4 Pro: +Y is up when the glasses are level.
-        float accelPitch = MathF.Atan2(sample.AccelZ, sample.AccelY) * (180f / MathF.PI);
+        // The pitch reference is negated so looking UP reads positive: on a
+        // steady hold the raw atan2(AccelZ, AccelY) went negative when the
+        // chin lifted (verified live via the `run` sign-check).
+        float accelPitch = MathF.Atan2(-sample.AccelZ, sample.AccelY) * (180f / MathF.PI);
         float accelRoll = MathF.Atan2(-sample.AccelX, sample.AccelY) * (180f / MathF.PI);
 
-        // Integrate gyro, then blend toward the gravity reference.
-        // NOTE: gyro axis-to-body mapping should be verified empirically
-        // (nod / shake / roll test) and adjusted here if needed.
-        _pitchDegrees = GyroWeight * (_pitchDegrees + sample.GyroX * dt) + (1f - GyroWeight) * accelPitch;
+        // Integrate gyro, then blend toward the gravity reference. Gyro axis-to-
+        // body mapping verified on hardware (calibrate: nod->X, shake->Y,
+        // roll->Z). GyroX is negated to match the look-up-positive pitch
+        // convention above; roll (tilt right = positive) and yaw already read in
+        // the intuitive direction, so they keep their sign.
+        _pitchDegrees = GyroWeight * (_pitchDegrees - sample.GyroX * dt) + (1f - GyroWeight) * accelPitch;
         _rollDegrees = GyroWeight * (_rollDegrees + sample.GyroZ * dt) + (1f - GyroWeight) * accelRoll;
         _yawDegrees += sample.GyroY * dt;
     }
