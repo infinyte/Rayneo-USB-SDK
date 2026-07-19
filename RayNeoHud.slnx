@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/RayNeo.Console/RayNeo.Console.csproj" />
+    <Project Path="src/RayNeo.Device/RayNeo.Device.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/RayNeo.Device.Tests/RayNeo.Device.Tests.csproj" />
+  </Folder>
+</Solution>
