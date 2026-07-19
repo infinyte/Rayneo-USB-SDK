@@ -80,3 +80,9 @@ Summary:
 `RayNeoFrameParser` (internal to `RayNeo.Device`, exposed to the test
 project via `InternalsVisibleTo`) is the single source of truth for wire
 decoding.
+
+## Documentation
+
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — components, data flow,
+  protocol, filter design, threading, and testing strategy.
+- [`docs/todo.md`](docs/todo.md) — completed vs. pending work.

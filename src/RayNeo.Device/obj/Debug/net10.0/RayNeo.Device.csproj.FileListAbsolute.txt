@@ -10,3 +10,16 @@ E:\work\RayNeoAir4USBDriver\src\RayNeo.Device\obj\Debug\net10.0\RayNeo.Device.dl
 E:\work\RayNeoAir4USBDriver\src\RayNeo.Device\obj\Debug\net10.0\refint\RayNeo.Device.dll
 E:\work\RayNeoAir4USBDriver\src\RayNeo.Device\obj\Debug\net10.0\RayNeo.Device.pdb
 E:\work\RayNeoAir4USBDriver\src\RayNeo.Device\obj\Debug\net10.0\ref\RayNeo.Device.dll
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\bin\Debug\net10.0\RayNeo.Device.deps.json
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\bin\Debug\net10.0\RayNeo.Device.dll
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\bin\Debug\net10.0\RayNeo.Device.pdb
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\obj\Debug\net10.0\RayNeo.Device.csproj.AssemblyReference.cache
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\obj\Debug\net10.0\RayNeo.Device.GeneratedMSBuildEditorConfig.editorconfig
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\obj\Debug\net10.0\RayNeo.Device.AssemblyInfoInputs.cache
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\obj\Debug\net10.0\RayNeo.Device.AssemblyInfo.cs
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\obj\Debug\net10.0\RayNeo.Device.csproj.CoreCompileInputs.cache
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\obj\Debug\net10.0\RayNeo.Device.sourcelink.json
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\obj\Debug\net10.0\RayNeo.Device.dll
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\obj\Debug\net10.0\refint\RayNeo.Device.dll
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\obj\Debug\net10.0\RayNeo.Device.pdb
+E:\work\Rayneo-USB-SDK\src\RayNeo.Device\obj\Debug\net10.0\ref\RayNeo.Device.dll
