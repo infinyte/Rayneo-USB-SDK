@@ -107,6 +107,7 @@ public sealed class WorldAnchoredElement : HudElement
     private readonly double _halfWidth;
     private readonly double _halfHeight;
     private readonly RotateTransform? _rollTransform;
+    private bool _anchorToFirstFrame;
 
     /// <summary>World yaw (degrees) this element is anchored to.</summary>
     public float AnchorYawDegrees { get; set; }
@@ -119,15 +120,21 @@ public sealed class WorldAnchoredElement : HudElement
     /// When true, counter-rotates the visual by the head roll so it stays level
     /// with the room (useful for the debug crosshair).
     /// </param>
+    /// <param name="anchorToFirstFrame">
+    /// When true, the anchor is captured from the first orientation seen, so the
+    /// element starts centred on the current gaze regardless of head pose or yaw
+    /// drift. It then holds that world direction as the head moves.
+    /// </param>
     public WorldAnchoredElement(
         FrameworkElement visual, double width, double height,
-        float anchorYawDeg, float anchorPitchDeg, bool levelWithHorizon = false)
+        float anchorYawDeg, float anchorPitchDeg, bool levelWithHorizon = false, bool anchorToFirstFrame = false)
         : base(visual)
     {
         _halfWidth = width / 2.0;
         _halfHeight = height / 2.0;
         AnchorYawDegrees = anchorYawDeg;
         AnchorPitchDegrees = anchorPitchDeg;
+        _anchorToFirstFrame = anchorToFirstFrame;
 
         if (levelWithHorizon)
         {
@@ -140,14 +147,21 @@ public sealed class WorldAnchoredElement : HudElement
     /// <inheritdoc/>
     public override void Arrange(HeadOrientation orientation, in HudViewport viewport)
     {
+        if (_anchorToFirstFrame)
+        {
+            AnchorYawDegrees = orientation.YawDegrees;
+            AnchorPitchDegrees = orientation.PitchDegrees;
+            _anchorToFirstFrame = false; // captured once; hold it thereafter
+        }
+
         double deltaYaw = orientation.YawDegrees - AnchorYawDegrees;
         double deltaPitch = orientation.PitchDegrees - AnchorPitchDegrees;
 
-        // Turn the head right (yaw increases) → the world point slides left;
-        // look up (pitch increases) → it slides down. Signs are the intuitive
-        // mapping for the calibrated axes; verify feel on hardware (see README
-        // follow-ups) and flip here if a channel reads inverted.
-        double x = viewport.CenterX - deltaYaw * viewport.PixelsPerDegreeX;
+        // World-lock signs verified live on the glasses: turning the head slides
+        // the anchored point opposite the gaze horizontally, and looking up/down
+        // slides it down/up. The yaw term is added (not subtracted) to match the
+        // device's yaw polarity, confirmed by the on-glasses anchoring check.
+        double x = viewport.CenterX + deltaYaw * viewport.PixelsPerDegreeX;
         double y = viewport.CenterY + deltaPitch * viewport.PixelsPerDegreeY;
 
         // Fade by angular eccentricity from the gaze centre.

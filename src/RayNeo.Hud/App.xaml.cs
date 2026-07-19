@@ -8,6 +8,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Windows;
 using Infinyte.RayNeo;
 using Infinyte.RayNeo.Hud.Display;
@@ -30,8 +32,35 @@ public partial class App : Application
         IHeadOrientationProvider provider = CreateProvider(out string? deviceWarning);
         string? warning = CombineWarnings(deviceWarning, selection.Warning);
 
+        LogStartup(displays, selection, deviceWarning);
+
         var window = new MainWindow(selection.Display, provider, warning);
         window.Show();
+    }
+
+    // A one-line-per-display startup log to %TEMP%\rayneo-hud.log so overlay
+    // placement can be diagnosed without a console (this is a windowed app).
+    private static void LogStartup(
+        IReadOnlyList<DisplayInfo> displays, DisplaySelection selection, string? deviceWarning)
+    {
+        try
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"[{DateTime.Now:HH:mm:ss}] RayNeo HUD startup");
+            sb.AppendLine($"  device: {(deviceWarning is null ? "glasses connected" : deviceWarning)}");
+            sb.AppendLine($"  displays ({displays.Count}):");
+            foreach (DisplayInfo d in displays)
+            {
+                sb.AppendLine($"    {d}");
+            }
+            sb.AppendLine($"  chosen: {selection.Display}");
+            sb.AppendLine($"  warning: {selection.Warning ?? "(none)"}");
+            File.WriteAllText(Path.Combine(Path.GetTempPath(), "rayneo-hud.log"), sb.ToString());
+        }
+        catch
+        {
+            // Diagnostics only — never let logging break startup.
+        }
     }
 
     // Opens the glasses if present; otherwise falls back to the simulator so the

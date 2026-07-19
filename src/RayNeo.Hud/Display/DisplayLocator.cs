@@ -43,8 +43,11 @@ public static class DisplayLocator
                 : new DisplaySelection(primary, $"--display {idx} not found; using primary display {primary}.");
         }
 
-        DisplayInfo? glasses = displays.FirstOrDefault(
-            d => !d.IsPrimary && d.Width == GlassesWidth && d.Height == GlassesHeight);
+        // A display at the glasses' native resolution identifies them whether or
+        // not Windows made them primary. Among matches, prefer a non-primary one
+        // (so a same-resolution laptop panel doesn't get chosen over the glasses).
+        var nativeMatches = displays.Where(d => d.Width == GlassesWidth && d.Height == GlassesHeight).ToList();
+        DisplayInfo? glasses = nativeMatches.FirstOrDefault(d => !d.IsPrimary) ?? nativeMatches.FirstOrDefault();
         if (glasses is not null)
         {
             return new DisplaySelection(glasses, null);

@@ -103,7 +103,8 @@ public partial class MainWindow : Window
         // with the horizon as the head rolls.
         FrameworkElement crosshair = BuildCrosshair();
         compositor.Add(new WorldAnchoredElement(
-            crosshair, width: 84, height: 84, anchorYawDeg: 0f, anchorPitchDeg: 0f, levelWithHorizon: true));
+            crosshair, width: 84, height: 84, anchorYawDeg: 0f, anchorPitchDeg: 0f,
+            levelWithHorizon: true, anchorToFirstFrame: true));
 
         // Surface any startup warning (no glasses / display fallback).
         if (_warning is not null)
