@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "2jRn+DjvDKE=",
+  "success": true,
+  "projectFilePath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kmitc\\.nuget\\packages\\anthropic\\12.36.0\\anthropic.12.36.0.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\microsoft.extensions.ai.abstractions\\10.5.1\\microsoft.extensions.ai.abstractions.10.5.1.nupkg.sha512"
+  ],
+  "logs": []
+}

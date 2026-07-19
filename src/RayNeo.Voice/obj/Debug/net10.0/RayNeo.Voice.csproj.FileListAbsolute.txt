@@ -1,0 +1,13 @@
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\bin\Debug\net10.0\RayNeo.Voice.deps.json
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\bin\Debug\net10.0\RayNeo.Voice.dll
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\bin\Debug\net10.0\RayNeo.Voice.pdb
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\obj\Debug\net10.0\RayNeo.Voice.csproj.AssemblyReference.cache
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\obj\Debug\net10.0\RayNeo.Voice.GeneratedMSBuildEditorConfig.editorconfig
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\obj\Debug\net10.0\RayNeo.Voice.AssemblyInfoInputs.cache
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\obj\Debug\net10.0\RayNeo.Voice.AssemblyInfo.cs
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\obj\Debug\net10.0\RayNeo.Voice.csproj.CoreCompileInputs.cache
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\obj\Debug\net10.0\RayNeo.Voice.sourcelink.json
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\obj\Debug\net10.0\RayNeo.Voice.dll
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\obj\Debug\net10.0\refint\RayNeo.Voice.dll
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\obj\Debug\net10.0\RayNeo.Voice.pdb
+E:\work\Rayneo-USB-SDK\src\RayNeo.Voice\obj\Debug\net10.0\ref\RayNeo.Voice.dll

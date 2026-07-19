@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!--
+    Platform-neutral (net10.0, not net10.0-windows). The interaction state
+    machine, conversation history, and the interfaces are pure .NET with no
+    audio/UI dependency, so they unit-test with no hardware (CLAUDE.md Phase 3).
+    ClaudeAssistantClient talks to the Anthropic API over the official SDK and is
+    exercised behind IAssistantClient, so tests fake it rather than calling out.
+    The Windows speech/hotkey implementations live in RayNeo.Hud behind the
+    ISpeechToText / ITextToSpeech interfaces declared here (Whisper-swappable).
+  -->
+  <ItemGroup>
+    <PackageReference Include="Anthropic" Version="12.36.0" />
+  </ItemGroup>
+
+</Project>

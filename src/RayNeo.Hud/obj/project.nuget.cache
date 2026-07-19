@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "5z59JE6rw5Q=",
+  "dgSpecHash": "UPKsTEz6aiU=",
   "success": true,
   "projectFilePath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\kmitc\\.nuget\\packages\\hidsharp\\2.6.4\\hidsharp.2.6.4.nupkg.sha512"
+    "C:\\Users\\kmitc\\.nuget\\packages\\anthropic\\12.36.0\\anthropic.12.36.0.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\hidsharp\\2.6.4\\hidsharp.2.6.4.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\microsoft.extensions.ai.abstractions\\10.5.1\\microsoft.extensions.ai.abstractions.10.5.1.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\system.speech\\10.0.10\\system.speech.10.0.10.nupkg.sha512"
   ],
   "logs": []
 }

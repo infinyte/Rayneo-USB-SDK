@@ -10,7 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Speech" Version="10.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RayNeo.Device\RayNeo.Device.csproj" />
+    <ProjectReference Include="..\RayNeo.Voice\RayNeo.Voice.csproj" />
   </ItemGroup>
 
 </Project>

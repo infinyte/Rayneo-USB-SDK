@@ -2,6 +2,22 @@
   "version": 3,
   "targets": {
     "net10.0-windows7.0": {
+      "Anthropic/12.36.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.AI.Abstractions": "10.5.1"
+        },
+        "compile": {
+          "lib/net9.0/Anthropic.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Anthropic.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "HidSharp/2.6.4": {
         "type": "package",
         "compile": {
@@ -12,6 +28,41 @@
         "runtime": {
           "lib/netstandard2.0/HidSharp.dll": {
             "related": ".pdb;.XML"
+          }
+        }
+      },
+      "Microsoft.Extensions.AI.Abstractions/10.5.1": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/Microsoft.Extensions.AI.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Extensions.AI.Abstractions.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "System.Speech/10.0.10": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/System.Speech.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/System.Speech.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net10.0/System.Speech.dll": {
+            "assetType": "runtime",
+            "rid": "win"
           }
         }
       },
@@ -27,10 +78,42 @@
         "runtime": {
           "bin/placeholder/RayNeo.Device.dll": {}
         }
+      },
+      "RayNeo.Voice/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "Anthropic": "12.36.0"
+        },
+        "compile": {
+          "bin/placeholder/RayNeo.Voice.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/RayNeo.Voice.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "Anthropic/12.36.0": {
+      "sha512": "xkpZhBg5hJPYfa5smXbtOki8+6RoHn1uikSSrSJPviAlaD0Ac09md0adC9OBZb8xbszQ6J4KSI//ndP95S2zAg==",
+      "type": "package",
+      "path": "anthropic/12.36.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "anthropic.12.36.0.nupkg.sha512",
+        "anthropic.nuspec",
+        "lib/net8.0/Anthropic.dll",
+        "lib/net8.0/Anthropic.xml",
+        "lib/net9.0/Anthropic.dll",
+        "lib/net9.0/Anthropic.xml",
+        "lib/netstandard2.0/Anthropic.dll",
+        "lib/netstandard2.0/Anthropic.xml",
+        "logo.png"
+      ]
+    },
     "HidSharp/2.6.4": {
       "sha512": "UcGvtnXFcatwHBXr+ei8GEXvg//wjGmDGQ6Xvb+7M4vHjURAhSLIJ+dSZv0BnAhQEpNlH8G4P7JxYnMH8Aph4g==",
       "type": "package",
@@ -51,15 +134,77 @@
         "lib/netstandard2.0/HidSharp.pdb"
       ]
     },
+    "Microsoft.Extensions.AI.Abstractions/10.5.1": {
+      "sha512": "nB0l3IlsVbNeUxsE7nZNb9GY8rP1OSeqpj0pseORPejt474HNKEauTWTLdSJPkSvPlRMxowZNMo6nyp7APAiSg==",
+      "type": "package",
+      "path": "microsoft.extensions.ai.abstractions/10.5.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "README.md",
+        "lib/net10.0/Microsoft.Extensions.AI.Abstractions.dll",
+        "lib/net10.0/Microsoft.Extensions.AI.Abstractions.xml",
+        "lib/net462/Microsoft.Extensions.AI.Abstractions.dll",
+        "lib/net462/Microsoft.Extensions.AI.Abstractions.xml",
+        "lib/net8.0/Microsoft.Extensions.AI.Abstractions.dll",
+        "lib/net8.0/Microsoft.Extensions.AI.Abstractions.xml",
+        "lib/net9.0/Microsoft.Extensions.AI.Abstractions.dll",
+        "lib/net9.0/Microsoft.Extensions.AI.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.AI.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.AI.Abstractions.xml",
+        "microsoft.extensions.ai.abstractions.10.5.1.nupkg.sha512",
+        "microsoft.extensions.ai.abstractions.nuspec"
+      ]
+    },
+    "System.Speech/10.0.10": {
+      "sha512": "a6xJl9sq7UHVx2hfrrg1h1800d0dI1o8ETEQ5YxOiND/DG57B0cC+SRQKmVE/bKA7U0YwWXKdOfz5wG2x+UDCA==",
+      "type": "package",
+      "path": "system.speech/10.0.10",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Speech.targets",
+        "lib/net10.0/System.Speech.dll",
+        "lib/net10.0/System.Speech.xml",
+        "lib/net462/_._",
+        "lib/net8.0/System.Speech.dll",
+        "lib/net8.0/System.Speech.xml",
+        "lib/net9.0/System.Speech.dll",
+        "lib/net9.0/System.Speech.xml",
+        "lib/netstandard2.0/System.Speech.dll",
+        "lib/netstandard2.0/System.Speech.xml",
+        "runtimes/win/lib/net10.0/System.Speech.dll",
+        "runtimes/win/lib/net10.0/System.Speech.xml",
+        "runtimes/win/lib/net8.0/System.Speech.dll",
+        "runtimes/win/lib/net8.0/System.Speech.xml",
+        "runtimes/win/lib/net9.0/System.Speech.dll",
+        "runtimes/win/lib/net9.0/System.Speech.xml",
+        "system.speech.10.0.10.nupkg.sha512",
+        "system.speech.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
     "RayNeo.Device/1.0.0": {
       "type": "project",
       "path": "../RayNeo.Device/RayNeo.Device.csproj",
       "msbuildProject": "../RayNeo.Device/RayNeo.Device.csproj"
+    },
+    "RayNeo.Voice/1.0.0": {
+      "type": "project",
+      "path": "../RayNeo.Voice/RayNeo.Voice.csproj",
+      "msbuildProject": "../RayNeo.Voice/RayNeo.Voice.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0-windows7.0": [
-      "RayNeo.Device >= 1.0.0"
+      "RayNeo.Device >= 1.0.0",
+      "RayNeo.Voice >= 1.0.0",
+      "System.Speech >= 10.0.10"
     ]
   },
   "packageFolders": {
@@ -96,6 +241,9 @@
           "projectReferences": {
             "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
               "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj"
+            },
+            "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj": {
+              "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj"
             }
           }
         }
@@ -115,6 +263,12 @@
     "frameworks": {
       "net10.0-windows7.0": {
         "targetAlias": "net10.0-windows",
+        "dependencies": {
+          "System.Speech": {
+            "target": "Package",
+            "version": "[10.0.10, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
