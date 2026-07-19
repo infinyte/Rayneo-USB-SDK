@@ -14,10 +14,12 @@ Author: Kurt Mitchell.
 src/RayNeo.Device/         Class library — client, wire parser, IMU sample, filter
 src/RayNeo.Console/        Console app — live readout and calibration tool
 src/RayNeo.Hud/            WPF overlay — display targeting, HUD compositor,
-                           Windows speech engines, push-to-talk hook, HUD tools
+                           System.Speech + Whisper STT engines, push-to-talk
+                           hook, HUD tools
 src/RayNeo.Voice/          Class library — voice state machine and controller,
                            conversation history, Claude client, tool-use layer
 tests/RayNeo.Device.Tests/ xUnit tests
+tests/RayNeo.Hud.Tests/    xUnit tests (Windows-only: Whisper orchestration)
 tests/RayNeo.Voice.Tests/  xUnit tests
 ```
 
@@ -25,8 +27,11 @@ Target framework: .NET 10.0 (`RayNeo.Hud` is `net10.0-windows` with WPF; the
 other projects are platform-neutral `net10.0`). Third-party dependencies:
 [HidSharp](https://www.nuget.org/packages/HidSharp) for raw HID access,
 [Anthropic](https://www.nuget.org/packages/Anthropic) (official SDK) for the
-Claude API, and `System.Speech` for the Windows dictation and synthesis
-engines.
+Claude API, `System.Speech` for the Windows dictation and synthesis engines,
+and (for the optional Whisper recognizer)
+[NAudio](https://www.nuget.org/packages/NAudio) for microphone capture and
+[Whisper.net](https://www.nuget.org/packages/Whisper.net) for local
+transcription.
 
 ## Component overview
 
@@ -87,10 +92,11 @@ interfaces.
 | Overlay | `MainWindow`, `NativeMethods` | Borderless, transparent, click-through, topmost window placed on the target monitor via physical pixel bounds. |
 | Compositor | `HudCompositor`, `HudViewport`, `HudElement` | 60 fps render loop arranging `ScreenFixedElement` chrome and `WorldAnchoredElement` visuals (world-locked with FOV-edge clamp and fade). |
 | Orientation | `IHeadOrientationProvider`, `DeviceOrientationProvider`, `SimulatedOrientationProvider` | Live filtered orientation from the glasses, or a synthetic sweep without hardware. |
-| Voice engines | `SystemSpeechToText`, `SystemSpeechSynthesizer` | `System.Speech` dictation (capture strictly between push-to-talk press and release; audio never persisted) and synthesis on the default audio device. |
+| Voice engines | `SystemSpeechToText`, `WhisperSpeechToText`, `SystemSpeechSynthesizer` | Two swappable `ISpeechToText` recognizers — `System.Speech` dictation (default) and a local Whisper backend — plus `System.Speech` synthesis. Both capture strictly between push-to-talk press and release; audio is never persisted. |
+| Whisper backend | `WhisperSpeechToText`, `IAudioCaptureSource` (`WaveInAudioCaptureSource`), `IWhisperTranscriber` (`WhisperNetTranscriber`), `PcmAudio` | Local Whisper recognizer split along two seams — NAudio 16 kHz/16-bit/mono capture and a Whisper.net transcriber — orchestrated by a pure `ISpeechToText` implementation (see below). |
 | Push-to-talk | `GlobalPushToTalkHook` | `WH_KEYBOARD_LL` hook: system-wide F8 (configurable via `--ptt`) hold-to-talk with auto-repeat filtering; the HUD window never needs focus. |
 | HUD tools | `PinSurface`, `HudTools` | World-anchored note pins placed relative to the current gaze (`pin_note` / `list_pins` / `clear_pins`) and `open_app_or_url` via `Process.Start`. |
-| Voice wiring | `VoiceRuntime`, `VoiceHudView`, `VoiceOptions` | Composition root that builds engines + tools + controller (degrading to HUD-only with an on-glass warning when the API key or speech stack is missing), and the on-glass voice UI: state indicator, transcript/reply panel, tool toast, timer chips. |
+| Voice wiring | `VoiceRuntime`, `VoiceHudView`, `VoiceOptions`, `VoiceCommandLine`, `SpeechEngineKind` | Composition root that builds engines + tools + controller (degrading to HUD-only with an on-glass warning when the API key or speech stack is missing), selects the recognizer from `--stt` / `--whisper-model` (`RAYNEO_WHISPER_MODEL` fallback), and the on-glass voice UI: state indicator, transcript/reply panel, tool toast, timer chips. |
 
 ## Data flow
 
@@ -209,6 +215,35 @@ each tool call is complete. The v1 tool set: `start_timer`, `cancel_timer`,
 `list_timers`, `get_current_time`, `set_speech_muted`, `clear_conversation`,
 `pin_note`, `list_pins`, `clear_pins`, `open_app_or_url`.
 
+### Whisper speech backend
+
+`WhisperSpeechToText` is a second `ISpeechToText` engine, selected with
+`--stt whisper` (System.Speech remains the default). It is deliberately split
+along two seams so its orchestration is pure and unit-testable without a
+microphone or a model:
+
+- `IAudioCaptureSource` — push-to-talk microphone capture. `WaveInAudioCaptureSource`
+  adapts NAudio's `WaveInEvent` at 16 kHz / 16-bit / mono (Whisper's native
+  input, so no resampling), converting each buffer to normalized floats via the
+  unit-tested `PcmAudio.ToFloatSamples`.
+- `IWhisperTranscriber` — float samples in, transcript out. `WhisperNetTranscriber`
+  loads a ggml model once via Whisper.net and runs a CPU transcription per call.
+
+Whisper has no native streaming mode, so `WhisperSpeechToText` accumulates the
+held audio in an in-memory buffer and produces **live partials by periodic
+re-transcription**: once ~1.5 s of new audio has arrived and no pass is in
+flight, it snapshots the buffer and transcribes it on a background task, raising
+`PartialRecognized` (single-flight; suppressed past ~30 s to bound cost). `Stop`
+cancels any in-flight partial and, unless the buffer is near-silence (in which
+case it emits the empty final directly, avoiding Whisper's hallucination on
+silence), transcribes the whole buffer once for exactly one `FinalRecognized`.
+
+**Privacy:** the buffer is memory-only and cleared at the start of every turn;
+no file, temp file, or stream sink exists in the path — only the *model* file is
+on disk, and that is configuration. **Degradation:** a missing or unloadable
+model does not crash the overlay — `VoiceRuntime` falls back to System.Speech
+with an on-glass warning (CLAUDE.md Phase 3).
+
 ## Threading
 
 - `RayNeoClient` runs a single background reader thread (`IsBackground =
@@ -219,8 +254,11 @@ each tool call is complete. The v1 tool set: `start_timer`, `cancel_timer`,
   throttled to ~60 fps.
 - `GlobalPushToTalkHook` fires on the UI thread (the thread that installed
   it); `System.Speech` and `TimerService` callbacks arrive on worker threads;
-  the reply stream runs as a task. `VoiceInteractionController` serialises all
-  transitions under one gate and may raise its events on any thread.
+  the reply stream runs as a task. `WhisperSpeechToText` runs its partial and
+  final transcription passes on background tasks and raises `PartialRecognized`
+  / `FinalRecognized` from them, serialising its buffer and single-flight state
+  under one gate. `VoiceInteractionController` serialises all transitions under
+  one gate and may raise its events on any thread.
 - `VoiceHudView` never marshals: event handlers only write immutable snapshot
   strings, and the per-frame callbacks (always on the UI thread) read them —
   so every voice state change is on-glass within a frame. The one exception is
@@ -249,8 +287,18 @@ without hardware. Coverage:
   activity events, and the exact messages sent back to the model.
 - **Timers and tools** — `TimerService` under a fake `TimeProvider` (no real
   time passes) and every built-in tool's result strings and argument errors.
+- **Whisper orchestration** (`RayNeo.Hud.Tests`, `net10.0-windows`) — the full
+  `WhisperSpeechToText` push-to-talk contract against fakes for the microphone
+  and transcriber (the fake transcriber completes via `TaskCompletionSource`, so
+  tests drive timing exactly): capture lifecycle, idempotent Start/Stop,
+  exactly-one-final, empty-on-silence, periodic partials with single-flight and
+  post-Stop suppression, faults, turn reuse, and disposal. Plus `PcmAudio`
+  16-bit→float conversion and `VoiceCommandLine` `--stt` / `--whisper-model`
+  parsing. No microphone, model, network, or glasses required — but, because the
+  backend lives in the `net10.0-windows` Hud project, these tests are
+  Windows-only.
 
-The Windows adapters (`SystemSpeechToText`, `SystemSpeechSynthesizer`,
-`GlobalPushToTalkHook`, `PinSurface`, HUD wiring) are deliberately thin and are
-verified by running the overlay; the logic they wrap lives behind the tested
-interfaces in `RayNeo.Voice`.
+The remaining Windows adapters (`SystemSpeechSynthesizer`, `GlobalPushToTalkHook`,
+`PinSurface`, HUD wiring) and the thin `WaveInAudioCaptureSource` /
+`WhisperNetTranscriber` device edges are deliberately minimal and are verified
+by running the overlay; the logic they wrap lives behind the tested interfaces.

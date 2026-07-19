@@ -12,8 +12,9 @@
     audio/UI dependency, so they unit-test with no hardware (CLAUDE.md Phase 3).
     ClaudeAssistantClient talks to the Anthropic API over the official SDK and is
     exercised behind IAssistantClient, so tests fake it rather than calling out.
-    The Windows speech/hotkey implementations live in RayNeo.Hud behind the
-    ISpeechToText / ITextToSpeech interfaces declared here (Whisper-swappable).
+    The speech/hotkey implementations live in RayNeo.Hud behind the
+    ISpeechToText / ITextToSpeech interfaces declared here: SystemSpeechToText
+    (System.Speech) and WhisperSpeechToText (local Whisper.net), swappable at launch.
   -->
   <ItemGroup>
     <PackageReference Include="Anthropic" Version="12.36.0" />

@@ -64,6 +64,13 @@ This file records only verified state — it does not track speculative features
 - [x] **Windows speech engines** — `System.Speech` dictation strictly between
   press and release (no audio persisted) and synthesis with the
   single-completion-signal contract.
+- [x] **Whisper speech backend** — local `WhisperSpeechToText` (NAudio capture
+  + Whisper.net) as a second `ISpeechToText` engine, selectable with
+  `--stt whisper` / `--whisper-model` (or `RAYNEO_WHISPER_MODEL`); System.Speech
+  stays the default and Whisper degrades to it with an on-glass warning when the
+  model is missing. Audio stays in memory, cleared each turn. *(verified:
+  `WhisperSpeechToText`, `PcmAudio`, `WhisperNetTranscriber`, and
+  `VoiceCommandLine` tests in `RayNeo.Hud.Tests`)*
 - [x] **Global push-to-talk** — `WH_KEYBOARD_LL` hook on F8 (configurable via
   `--ptt`), auto-repeat filtered, works system-wide without window focus.
 - [x] **HUD tools** — world-anchored note pins relative to the current gaze
@@ -86,6 +93,3 @@ These are flagged directly in the source, not verified by any test:
   using the device yaw polarity assumed from the world-anchoring fix; the
   header comment flags flipping `SideYawOffsetDeg`'s sign if a live smoke test
   shows left/right mirrored.
-- [ ] **Whisper speech backend** — `ISpeechToText` is engine-agnostic so a
-  local Whisper recognizer can replace `SystemSpeechToText`; noted in the
-  interface summary.

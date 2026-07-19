@@ -28,6 +28,7 @@ public partial class App : Application
 
         int? requestedDisplay = ParseDisplayArg(e.Args);
         VoiceOptions voiceOptions = ParsePttArg(e.Args);
+        voiceOptions = ApplySpeechEngineArgs(e.Args, voiceOptions);
 
         IReadOnlyList<DisplayInfo> displays = DisplayEnumerator.All();
         DisplaySelection selection = DisplayLocator.Choose(displays, requestedDisplay);
@@ -92,6 +93,22 @@ public partial class App : Application
             return displayWarning;
         }
         return displayWarning is null ? deviceWarning : $"{deviceWarning}  |  {displayWarning}";
+    }
+
+    // --stt whisper --whisper-model <path> — pick the recognizer. An unknown
+    // --stt value falls back to System.Speech so a typo never leaves voice
+    // unusable; VoiceRuntime surfaces any Whisper model problem on the glass.
+    private static VoiceOptions ApplySpeechEngineArgs(string[] args, VoiceOptions options)
+    {
+        try
+        {
+            SpeechEngineSelection selection = VoiceCommandLine.ParseSpeechEngine(args);
+            return options with { Engine = selection.Engine, WhisperModelPath = selection.WhisperModelPath };
+        }
+        catch (ArgumentException)
+        {
+            return options; // keep the default System engine
+        }
     }
 
     private static int? ParseDisplayArg(string[] args)

@@ -7,6 +7,7 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/RayNeo.Device.Tests/RayNeo.Device.Tests.csproj" />
+    <Project Path="tests/RayNeo.Hud.Tests/RayNeo.Hud.Tests.csproj" />
     <Project Path="tests/RayNeo.Voice.Tests/RayNeo.Voice.Tests.csproj" />
   </Folder>
 </Solution>

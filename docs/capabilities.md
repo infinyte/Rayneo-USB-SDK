@@ -39,7 +39,7 @@ Current implementation status for RayNeo HUD capabilities.
 | 🟢 | Speech/Input | System speech adapters | STT during hold-to-talk only; TTS output support |
 | 🟢 | Speech/Input | Global push-to-talk hook | System-wide key capture (default F8, configurable) |
 | 🟢 | Speech/Input | Voice HUD view | State, transcript, streaming reply, tool toasts, timer chips |
-| 🟡 | Speech/Input | Whisper STT backend | Planned behind `ISpeechToText` interface seam |
+| 🟢 | Speech/Input | Whisper STT backend | Local Whisper.net recognizer behind `ISpeechToText`; `--stt whisper` (default remains System.Speech) |
 | 🟢 | Quality | Automated tests and gates | Device/voice/tool/timer/state machine coverage; non-live runs pass without hardware |
 | 🔴 | Roadmap | Post-Whisper voice enhancement scope | Not yet defined in repository docs |
 
@@ -131,7 +131,10 @@ Current implementation status for RayNeo HUD capabilities.
   - Tool activity toasts.
   - Timer chips.
 - 🟢 Graceful HUD-mode degradation when speech stack/API key is unavailable.
-- 🟡 Whisper-backed speech-to-text implementation behind `ISpeechToText`.
+- 🟢 Local Whisper speech-to-text recognizer behind `ISpeechToText`
+  (`WhisperSpeechToText` over NAudio capture + Whisper.net), selected with
+  `--stt whisper`; falls back to System.Speech with an on-glass warning when
+  the model is missing.
 
 ## Test coverage and quality gates
 
@@ -141,6 +144,9 @@ Current implementation status for RayNeo HUD capabilities.
 - 🟢 Voice controller tests (happy path, faults, barge-in, mute, timers).
 - 🟢 Tool loop tests (chained tools, errors, cancellation, round limits).
 - 🟢 Timer and built-in tool tests.
+- 🟢 Whisper orchestration tests (capture lifecycle, partials, single final,
+  faults, reuse), PCM→float conversion, and speech-engine command-line parsing
+  (`RayNeo.Hud.Tests`, Windows-only, no microphone/model/network).
 - 🟢 Build + test pass without hardware for non-live scenarios.
 
 ## Upcoming implementation focus
@@ -148,5 +154,4 @@ Current implementation status for RayNeo HUD capabilities.
 - 🟡 Add magnetometer yaw fusion in `HeadOrientationFilter`.
 - 🟡 Complete empirical axis mapping verification and lock in final orientation mapping.
 - 🟡 Finalize pin lateral polarity validation on live hardware.
-- 🟡 Add local Whisper speech recognizer implementation behind `ISpeechToText`.
 - 🔴 Define and prioritize post-Whisper voice enhancements (not yet scoped in repo docs).

@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.Windows.Threading;
 
 namespace Infinyte.RayNeo.Hud.Voice;
@@ -23,12 +24,18 @@ public sealed record VoiceOptions(int VirtualKey, string KeyName)
 {
     /// <summary>F8 — rarely bound by other applications and easy to hold.</summary>
     public static VoiceOptions Default { get; } = new(0x77, "F8");
+
+    /// <summary>The speech-to-text backend to build (default: System.Speech).</summary>
+    public SpeechEngineKind Engine { get; init; } = SpeechEngineKind.System;
+
+    /// <summary>The ggml model path used when <see cref="Engine"/> is Whisper.</summary>
+    public string? WhisperModelPath { get; init; }
 }
 
 /// <summary>The assembled voice stack for one HUD session.</summary>
 public sealed class VoiceRuntime : IDisposable
 {
-    private readonly SystemSpeechToText _speechToText;
+    private readonly ISpeechToText _speechToText;
     private readonly SystemSpeechSynthesizer _textToSpeech;
     private readonly GlobalPushToTalkHook _pushToTalk;
 
@@ -36,7 +43,7 @@ public sealed class VoiceRuntime : IDisposable
         VoiceInteractionController controller,
         TimerService timers,
         PinSurface pins,
-        SystemSpeechToText speechToText,
+        ISpeechToText speechToText,
         SystemSpeechSynthesizer textToSpeech,
         GlobalPushToTalkHook pushToTalk,
         VoiceOptions options)
@@ -80,12 +87,14 @@ public sealed class VoiceRuntime : IDisposable
             return null;
         }
 
-        SystemSpeechToText? speechToText = null;
+        ISpeechToText? speechToText = null;
         SystemSpeechSynthesizer? textToSpeech = null;
         GlobalPushToTalkHook? pushToTalk = null;
         try
         {
-            speechToText = new SystemSpeechToText();
+            // Build the requested recognizer; a missing/invalid Whisper model
+            // degrades to System.Speech with an on-glass warning (never crashes).
+            speechToText = CreateSpeechEngine(options, out string? engineWarning);
             textToSpeech = new SystemSpeechSynthesizer();
             pushToTalk = new GlobalPushToTalkHook(options.VirtualKey);
 
@@ -110,7 +119,7 @@ public sealed class VoiceRuntime : IDisposable
                 pushToTalk, speechToText, assistant, textToSpeech, history, timers);
             controller.Start(); // installs the keyboard hook on this (UI) thread
 
-            warning = null;
+            warning = engineWarning;
             return new VoiceRuntime(controller, timers, pins, speechToText, textToSpeech, pushToTalk, options);
         }
         catch (Exception ex)
@@ -120,6 +129,37 @@ public sealed class VoiceRuntime : IDisposable
             pushToTalk?.Dispose();
             warning = $"Voice disabled — {ex.Message}";
             return null;
+        }
+    }
+
+    // Builds the recognizer named by options.Engine. Whisper degrades to
+    // System.Speech (with a warning) when its model is missing or fails to load,
+    // so voice stays usable and the wearer can see why (CLAUDE.md Phase 3).
+    private static ISpeechToText CreateSpeechEngine(VoiceOptions options, out string? warning)
+    {
+        warning = null;
+        if (options.Engine != SpeechEngineKind.Whisper)
+        {
+            return new SystemSpeechToText();
+        }
+
+        string? modelPath = options.WhisperModelPath;
+        if (string.IsNullOrWhiteSpace(modelPath) || !File.Exists(modelPath))
+        {
+            warning = modelPath is null
+                ? "Voice using Windows speech — no Whisper model (set --whisper-model or RAYNEO_WHISPER_MODEL)."
+                : $"Voice using Windows speech — Whisper model not found: {modelPath}";
+            return new SystemSpeechToText();
+        }
+
+        try
+        {
+            return new WhisperSpeechToText(new WaveInAudioCaptureSource(), new WhisperNetTranscriber(modelPath));
+        }
+        catch (Exception ex)
+        {
+            warning = $"Voice using Windows speech — Whisper failed to load: {ex.Message}";
+            return new SystemSpeechToText();
         }
     }
 

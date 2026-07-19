@@ -14,7 +14,9 @@ namespace Infinyte.RayNeo.Voice;
 /// <see cref="FinalRecognized"/> with the best final transcript (empty string if
 /// nothing was recognized). Implementations must capture audio only between
 /// Start and Stop and never persist it to disk (CLAUDE.md Phase 3). The
-/// interface is engine-agnostic so a Whisper backend can replace the Windows one.
+/// interface is engine-agnostic; both a Windows <c>System.Speech</c> engine
+/// (<c>SystemSpeechToText</c>) and a local Whisper engine
+/// (<c>WhisperSpeechToText</c>) implement it, and either can be selected at launch.
 /// </summary>
 public interface ISpeechToText : IDisposable
 {

@@ -5,7 +5,8 @@
 // ISpeechToText over System.Speech's offline dictation engine. Capture runs
 // strictly between Start and Stop (push-to-talk; CLAUDE.md Phase 3) and audio
 // is never written anywhere — the engine reads the default microphone live.
-// A Whisper-based implementation can replace this behind the same interface.
+// This is the default recognizer; WhisperSpeechToText is the sibling local
+// Whisper engine behind the same interface, selectable with --stt whisper.
 // -----------------------------------------------------------------------------
 
 using System;

@@ -1,13 +1,23 @@
 {
   "version": 2,
-  "dgSpecHash": "UPKsTEz6aiU=",
+  "dgSpecHash": "LKgLvGW8a3k=",
   "success": true,
   "projectFilePath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kmitc\\.nuget\\packages\\anthropic\\12.36.0\\anthropic.12.36.0.nupkg.sha512",
     "C:\\Users\\kmitc\\.nuget\\packages\\hidsharp\\2.6.4\\hidsharp.2.6.4.nupkg.sha512",
     "C:\\Users\\kmitc\\.nuget\\packages\\microsoft.extensions.ai.abstractions\\10.5.1\\microsoft.extensions.ai.abstractions.10.5.1.nupkg.sha512",
-    "C:\\Users\\kmitc\\.nuget\\packages\\system.speech\\10.0.10\\system.speech.10.0.10.nupkg.sha512"
+    "C:\\Users\\kmitc\\.nuget\\packages\\naudio\\2.3.0\\naudio.2.3.0.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\naudio.asio\\2.3.0\\naudio.asio.2.3.0.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\naudio.core\\2.3.0\\naudio.core.2.3.0.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\naudio.midi\\2.3.0\\naudio.midi.2.3.0.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\naudio.wasapi\\2.3.0\\naudio.wasapi.2.3.0.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\naudio.winforms\\2.3.0\\naudio.winforms.2.3.0.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\naudio.winmm\\2.3.0\\naudio.winmm.2.3.0.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\system.speech\\10.0.10\\system.speech.10.0.10.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\whisper.net\\1.9.1\\whisper.net.1.9.1.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\whisper.net.runtime\\1.9.1\\whisper.net.runtime.1.9.1.nupkg.sha512",
+    "C:\\Users\\kmitc\\.nuget\\packages\\whisper.net.runtime.metal\\1.9.1\\whisper.net.runtime.metal.1.9.1.nupkg.sha512"
   ],
   "logs": []
 }

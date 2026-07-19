@@ -24,8 +24,10 @@
 - Microphone is captured ONLY while push-to-talk is held. Never
   always-listening; no audio is ever written to disk.
 - Speech-to-text and text-to-speech live behind interfaces
-  (ISpeechToText / ITextToSpeech) so engines are swappable (Whisper
-  later). Consumers depend on the interfaces only.
+  (ISpeechToText / ITextToSpeech) so engines are swappable. Two STT
+  engines are implemented behind the seam — System.Speech
+  (SystemSpeechToText, default) and local Whisper (WhisperSpeechToText,
+  --stt whisper). Consumers depend on the interfaces only.
 - The HUD window is click-through and unfocused by design. All voice
   controls must work system-wide (global hotkey), never via window focus.
 - Every HUD state change must be visible on the glasses — Kurt cannot

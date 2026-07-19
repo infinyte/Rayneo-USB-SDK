@@ -16,11 +16,13 @@ Author: Kurt Mitchell.
 ```
 src/RayNeo.Device/         Class library — client, filter, wire parser
 src/RayNeo.Console/        Console app — live demo and calibration tool
-src/RayNeo.Hud/            WPF overlay — HUD compositor, Windows speech
-                           engines, push-to-talk hook, HUD tools
+src/RayNeo.Hud/            WPF overlay — HUD compositor, System.Speech and
+                           Whisper STT engines, push-to-talk hook, HUD tools
 src/RayNeo.Voice/          Class library — voice loop controller, state
                            machine, Claude client, tool-use layer
 tests/RayNeo.Device.Tests/ xUnit tests (golden decode vector + filter maths)
+tests/RayNeo.Hud.Tests/    xUnit tests (Whisper orchestration, PCM conversion,
+                           speech-engine command line) — Windows-only
 tests/RayNeo.Voice.Tests/  xUnit tests (state machine, controller, tool loop,
                            timers, tools, history)
 ```
@@ -35,6 +37,11 @@ tests/RayNeo.Voice.Tests/  xUnit tests (state machine, controller, tool loop,
   from the environment only — never from a file or the command line), a
   microphone, and the Windows speech components (present by default).
   Without the key the HUD runs with voice disabled and says so on-glass.
+- For the optional local Whisper recognizer (`--stt whisper`): a whisper.cpp
+  ggml model file such as `ggml-base.en.bin` (~142 MB), downloadable from
+  <https://huggingface.co/ggerganov/whisper.cpp/tree/main>. No model is
+  downloaded automatically; if it is missing the HUD stays on System.Speech
+  and warns on-glass.
 
 ## Build
 
@@ -53,7 +60,12 @@ command-frame builder, the sample dedupe key, both convergence paths of
 `HeadOrientationFilter`, and the full voice stack: every legal and illegal
 state-machine transition, the controller's happy path / barge-in / fault /
 mute branches, the model↔tool orchestration loop against a scripted
-transport, timers under a fake clock, and each built-in tool.
+transport, timers under a fake clock, and each built-in tool. The
+Windows-only `RayNeo.Hud.Tests` project covers the Whisper push-to-talk
+orchestration (capture lifecycle, periodic partials, exactly-one-final,
+faults, reuse) against fakes, the 16-bit PCM→float conversion, and the
+`--stt` / `--whisper-model` command-line parsing — no microphone, model, or
+network required.
 
 ## Run
 
@@ -84,6 +96,18 @@ read aloud; press F8 again mid-reply to barge in. `--ptt F13` (or any
 Things to say: "start a five minute tea timer", "pin buy milk to my left",
 "what timers are running?", "open notepad", "mute yourself", "clear the
 conversation".
+
+By default speech-to-text uses the Windows `System.Speech` dictation engine.
+To use a fully local Whisper recognizer instead, pass `--stt whisper` and
+point it at a ggml model:
+
+```
+dotnet run --project src/RayNeo.Hud -- --stt whisper --whisper-model C:\models\ggml-base.en.bin
+```
+
+The model path may instead come from the `RAYNEO_WHISPER_MODEL` environment
+variable. The model loads once at startup; if it is missing or fails to load,
+the HUD falls back to System.Speech and shows the reason on-glass.
 
 If the glasses are not connected the console app exits with a clear message
 and the HUD falls back to simulated head motion.

@@ -11,6 +11,12 @@
 
   <ItemGroup>
     <PackageReference Include="System.Speech" Version="10.0.10" />
+    <!-- Local Whisper recognizer (second ISpeechToText engine). NAudio captures
+         16 kHz/16-bit/mono; Whisper.net runs whisper.cpp in-process; the Runtime
+         package ships the win-x64 CPU native binaries. -->
+    <PackageReference Include="NAudio" Version="2.3.0" />
+    <PackageReference Include="Whisper.net" Version="1.9.1" />
+    <PackageReference Include="Whisper.net.Runtime" Version="1.9.1" />
   </ItemGroup>
 
   <ItemGroup>
