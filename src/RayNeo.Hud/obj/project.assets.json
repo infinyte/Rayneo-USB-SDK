@@ -214,11 +214,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj",
+      "projectUniqueName": "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj",
       "projectName": "RayNeo.Hud",
-      "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj",
+      "projectPath": "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj",
       "packagesPath": "C:\\Users\\kmitc\\.nuget\\packages\\",
-      "outputPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\obj\\",
+      "outputPath": "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -239,11 +239,11 @@
         "net10.0-windows7.0": {
           "targetAlias": "net10.0-windows",
           "projectReferences": {
-            "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
-              "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj"
+            "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
+              "projectPath": "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj"
             },
-            "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj": {
-              "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj"
+            "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj": {
+              "projectPath": "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj"
             }
           }
         }

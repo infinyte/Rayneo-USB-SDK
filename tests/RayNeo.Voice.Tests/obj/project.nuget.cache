@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aAvjSohP2Zc=",
+  "dgSpecHash": "CGyP1EeMnrU=",
   "success": true,
-  "projectFilePath": "E:\\work\\Rayneo-USB-SDK\\tests\\RayNeo.Voice.Tests\\RayNeo.Voice.Tests.csproj",
+  "projectFilePath": "e:\\work\\Rayneo-USB-SDK\\tests\\RayNeo.Voice.Tests\\RayNeo.Voice.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kmitc\\.nuget\\packages\\anthropic\\12.36.0\\anthropic.12.36.0.nupkg.sha512",
     "C:\\Users\\kmitc\\.nuget\\packages\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",

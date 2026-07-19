@@ -2,8 +2,9 @@
 // NativeMethods.cs
 // Author: Kurt Mitchell
 //
-// P/Invoke surface for the HUD overlay: monitor enumeration and the window
-// styling needed for a click-through, layered, always-on-top overlay.
+// P/Invoke surface for the HUD overlay: monitor enumeration, the window
+// styling needed for a click-through, layered, always-on-top overlay, and the
+// low-level keyboard hook behind global push-to-talk.
 // -----------------------------------------------------------------------------
 
 using System;
@@ -28,6 +29,13 @@ internal static class NativeMethods
     // ---- Monitor enumeration ------------------------------------------------
     public const uint MONITORINFOF_PRIMARY = 0x1;
 
+    // ---- Low-level keyboard hook (push-to-talk) -----------------------------
+    public const int WH_KEYBOARD_LL = 13;
+    public const long WM_KEYDOWN = 0x0100;
+    public const long WM_KEYUP = 0x0101;
+    public const long WM_SYSKEYDOWN = 0x0104;
+    public const long WM_SYSKEYUP = 0x0105;
+
     [StructLayout(LayoutKind.Sequential)]
     public struct RECT
     {
@@ -45,7 +53,21 @@ internal static class NativeMethods
         public uint dwFlags;
     }
 
+    /// <summary>Payload of a WH_KEYBOARD_LL hook callback.</summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct KBDLLHOOKSTRUCT
+    {
+        public uint vkCode;
+        public uint scanCode;
+        public uint flags;
+        public uint time;
+        public nuint dwExtraInfo;
+    }
+
     public delegate bool MonitorEnumProc(IntPtr hMonitor, IntPtr hdc, ref RECT lprc, IntPtr data);
+
+    /// <summary>WH_KEYBOARD_LL callback signature.</summary>
+    public delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
     [DllImport("user32.dll")]
     public static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr clip, MonitorEnumProc callback, IntPtr data);
@@ -63,4 +85,18 @@ internal static class NativeMethods
     [DllImport("user32.dll", SetLastError = true)]
     public static extern bool SetWindowPos(
         IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint flags);
+
+    // ---- Keyboard hook ------------------------------------------------------
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern IntPtr SetWindowsHookExW(
+        int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+    [DllImport("user32.dll")]
+    public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+    public static extern IntPtr GetModuleHandleW(string? lpModuleName);
 }

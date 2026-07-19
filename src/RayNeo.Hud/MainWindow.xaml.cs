@@ -3,8 +3,9 @@
 // Author: Kurt Mitchell
 //
 // The overlay window: borderless, transparent, always-on-top, click-through,
-// placed full-screen on the target monitor. Builds the debug HUD scene and
-// starts the compositor.
+// placed full-screen on the target monitor. Builds the debug HUD scene, starts
+// the compositor, and brings up the voice stack (degrading to HUD-only with an
+// on-glass warning when voice cannot run).
 // -----------------------------------------------------------------------------
 
 using System;
@@ -17,6 +18,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using Infinyte.RayNeo.Hud.Display;
 using Infinyte.RayNeo.Hud.Interop;
+using Infinyte.RayNeo.Hud.Voice;
 
 namespace Infinyte.RayNeo.Hud;
 
@@ -30,20 +32,24 @@ public partial class MainWindow : Window
     private readonly DisplayInfo _target;
     private readonly IHeadOrientationProvider _provider;
     private readonly string? _warning;
+    private readonly VoiceOptions _voiceOptions;
     private HudCompositor? _compositor;
+    private VoiceRuntime? _voice;
 
     /// <summary>Creates the overlay for a specific display and orientation source.</summary>
-    public MainWindow(DisplayInfo target, IHeadOrientationProvider provider, string? warning)
+    public MainWindow(DisplayInfo target, IHeadOrientationProvider provider, string? warning, VoiceOptions voiceOptions)
     {
         InitializeComponent();
         _target = target;
         _provider = provider;
         _warning = warning;
+        _voiceOptions = voiceOptions;
 
         Loaded += OnLoaded;
         Closed += (_, _) =>
         {
             _compositor?.Stop();
+            _voice?.Dispose();
             _provider.Dispose();
         };
     }
@@ -72,14 +78,25 @@ public partial class MainWindow : Window
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         _compositor = new HudCompositor(Root, _provider);
-        BuildScene(_compositor);
+
+        // Voice needs the compositor (pins render through it) and the UI thread
+        // (the keyboard hook installs here). Null means voice is disabled; the
+        // returned warning is surfaced on the glass alongside any display warning.
+        _voice = VoiceRuntime.TryCreate(Dispatcher, _compositor, _provider, _voiceOptions, out string? voiceWarning);
+
+        BuildScene(_compositor, voiceWarning);
+        if (_voice is not null)
+        {
+            VoiceHudView.Attach(_compositor, _voice);
+        }
+
         _provider.Start();
         _compositor.Start();
     }
 
     // ---- Scene --------------------------------------------------------------
 
-    private void BuildScene(HudCompositor compositor)
+    private void BuildScene(HudCompositor compositor, string? voiceWarning)
     {
         // ScreenFixed chrome: clock (top-centre) and connection status (top-left).
         TextBlock clock = MakeText(28, FontWeights.SemiBold, ChromeBrush);
@@ -106,15 +123,25 @@ public partial class MainWindow : Window
             crosshair, width: 84, height: 84, anchorYawDeg: 0f, anchorPitchDeg: 0f,
             levelWithHorizon: true, anchorToFirstFrame: true));
 
-        // Surface any startup warning (no glasses / display fallback).
-        if (_warning is not null)
+        // Surface any startup warnings (no glasses / display fallback / voice off).
+        string? warning = Combine(_warning, voiceWarning);
+        if (warning is not null)
         {
             TextBlock warn = MakeText(15, FontWeights.Normal, WarningBrush);
             warn.MaxWidth = 560;
             warn.TextWrapping = TextWrapping.Wrap;
-            warn.Text = "⚠ " + _warning;
+            warn.Text = "⚠ " + warning;
             compositor.Add(new ScreenFixedElement(warn, ScreenAnchor.BottomLeft, margin: 24));
         }
+    }
+
+    private static string? Combine(string? first, string? second)
+    {
+        if (first is null)
+        {
+            return second;
+        }
+        return second is null ? first : $"{first}  |  {second}";
     }
 
     // A cyan crosshair: four ticks around a centre ring, with a soft glow so it

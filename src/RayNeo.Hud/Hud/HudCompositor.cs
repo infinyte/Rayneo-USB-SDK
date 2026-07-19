@@ -48,6 +48,13 @@ public sealed class HudCompositor
         _canvas.Children.Add(element.Visual);
     }
 
+    /// <summary>Unregisters an element and removes its visual from the canvas.</summary>
+    public void Remove(HudElement element)
+    {
+        _elements.Remove(element);
+        _canvas.Children.Remove(element.Visual);
+    }
+
     /// <summary>Starts the render loop.</summary>
     public void Start() => CompositionTarget.Rendering += OnRendering;
 

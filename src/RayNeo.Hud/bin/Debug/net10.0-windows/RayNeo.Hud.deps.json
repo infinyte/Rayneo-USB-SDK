@@ -8,10 +8,23 @@
     ".NETCoreApp,Version=v10.0": {
       "RayNeo.Hud/1.0.0": {
         "dependencies": {
-          "RayNeo.Device": "1.0.0"
+          "RayNeo.Device": "1.0.0",
+          "RayNeo.Voice": "1.0.0",
+          "System.Speech": "10.0.10"
         },
         "runtime": {
           "RayNeo.Hud.dll": {}
+        }
+      },
+      "Anthropic/12.36.0": {
+        "dependencies": {
+          "Microsoft.Extensions.AI.Abstractions": "10.5.1"
+        },
+        "runtime": {
+          "lib/net9.0/Anthropic.dll": {
+            "assemblyVersion": "12.36.0.0",
+            "fileVersion": "12.36.0.0"
+          }
         }
       },
       "HidSharp/2.6.4": {
@@ -19,6 +32,30 @@
           "lib/netstandard2.0/HidSharp.dll": {
             "assemblyVersion": "2.6.4.0",
             "fileVersion": "2.6.4.0"
+          }
+        }
+      },
+      "Microsoft.Extensions.AI.Abstractions/10.5.1": {
+        "runtime": {
+          "lib/net10.0/Microsoft.Extensions.AI.Abstractions.dll": {
+            "assemblyVersion": "10.5.0.0",
+            "fileVersion": "10.500.126.25103"
+          }
+        }
+      },
+      "System.Speech/10.0.10": {
+        "runtime": {
+          "lib/net10.0/System.Speech.dll": {
+            "assemblyVersion": "10.0.0.10",
+            "fileVersion": "10.0.1026.32716"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net10.0/System.Speech.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "10.0.0.10",
+            "fileVersion": "10.0.1026.32716"
           }
         }
       },
@@ -32,6 +69,17 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "RayNeo.Voice/1.0.0": {
+        "dependencies": {
+          "Anthropic": "12.36.0"
+        },
+        "runtime": {
+          "RayNeo.Voice.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -41,6 +89,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Anthropic/12.36.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xkpZhBg5hJPYfa5smXbtOki8+6RoHn1uikSSrSJPviAlaD0Ac09md0adC9OBZb8xbszQ6J4KSI//ndP95S2zAg==",
+      "path": "anthropic/12.36.0",
+      "hashPath": "anthropic.12.36.0.nupkg.sha512"
+    },
     "HidSharp/2.6.4": {
       "type": "package",
       "serviceable": true,
@@ -48,7 +103,26 @@
       "path": "hidsharp/2.6.4",
       "hashPath": "hidsharp.2.6.4.nupkg.sha512"
     },
+    "Microsoft.Extensions.AI.Abstractions/10.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nB0l3IlsVbNeUxsE7nZNb9GY8rP1OSeqpj0pseORPejt474HNKEauTWTLdSJPkSvPlRMxowZNMo6nyp7APAiSg==",
+      "path": "microsoft.extensions.ai.abstractions/10.5.1",
+      "hashPath": "microsoft.extensions.ai.abstractions.10.5.1.nupkg.sha512"
+    },
+    "System.Speech/10.0.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-a6xJl9sq7UHVx2hfrrg1h1800d0dI1o8ETEQ5YxOiND/DG57B0cC+SRQKmVE/bKA7U0YwWXKdOfz5wG2x+UDCA==",
+      "path": "system.speech/10.0.10",
+      "hashPath": "system.speech.10.0.10.nupkg.sha512"
+    },
     "RayNeo.Device/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RayNeo.Voice/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

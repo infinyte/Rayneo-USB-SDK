@@ -3,7 +3,9 @@
 // Author: Kurt Mitchell
 //
 // IAssistantClient backed by Anthropic's Claude API (official Anthropic .NET
-// SDK). Streams the reply as text deltas so the HUD can render it token-by-token.
+// SDK). Composes AnthropicTurnTransport (the only SDK-touching type) with
+// AssistantToolLoop, so replies stream as text deltas while tool calls the
+// model makes are executed transparently between turns.
 //
 // Model: claude-opus-4-8 by default (configurable). Thinking is left off for a
 // low-latency conversational turn — a hands-free HUD wants the first words on
@@ -16,16 +18,11 @@
 // shows a brief on-glass error rather than crashing (CLAUDE.md Phase 3).
 // -----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using Anthropic;
-using Anthropic.Models.Messages;
 
 namespace Infinyte.RayNeo.Voice;
 
-/// <summary>Streams Claude replies for the voice loop over the Anthropic API.</summary>
+/// <summary>Streams Claude replies (with tool use) for the voice loop.</summary>
 public sealed class ClaudeAssistantClient : IAssistantClient
 {
     private const string DefaultModel = "claude-opus-4-8";
@@ -36,64 +33,45 @@ public sealed class ClaudeAssistantClient : IAssistantClient
         "spoken-style sentences. Use plain text only — no markdown, lists, headings, " +
         "or code blocks. Lead with the answer; skip preamble.";
 
-    private readonly AnthropicClient _client;
-    private readonly string _model;
-    private readonly string _systemPrompt;
-    private readonly int _maxTokens;
+    private const string ToolGuidance =
+        " You have tools; use them whenever they help (timers, notes, apps, session " +
+        "control) and then confirm what you did in a few words. Never invent a tool " +
+        "outcome — report what the tool actually returned.";
+
+    private readonly AssistantToolLoop _loop;
 
     /// <summary>
     /// Creates a client. <paramref name="client"/> is injectable for testing;
     /// when null a default <see cref="AnthropicClient"/> is used, which reads the
     /// API key from the ANTHROPIC_API_KEY environment variable.
+    /// <paramref name="tools"/> is the tool set offered to the model; when null
+    /// or empty the client behaves as a plain conversational assistant.
     /// </summary>
     public ClaudeAssistantClient(
         AnthropicClient? client = null,
         string? model = null,
         string? systemPrompt = null,
-        int maxTokens = 1024)
+        int maxTokens = 1024,
+        VoiceToolRegistry? tools = null)
     {
-        _client = client ?? new AnthropicClient();
-        _model = model ?? DefaultModel;
-        _systemPrompt = systemPrompt ?? DefaultSystemPrompt;
-        _maxTokens = maxTokens;
+        tools ??= new VoiceToolRegistry();
+
+        string prompt = systemPrompt ?? (tools.Tools.Count > 0
+            ? DefaultSystemPrompt + ToolGuidance
+            : DefaultSystemPrompt);
+
+        var transport = new AnthropicTurnTransport(
+            client ?? new AnthropicClient(), model ?? DefaultModel, prompt, maxTokens);
+        _loop = new AssistantToolLoop(transport, tools);
+        _loop.ToolActivity += (_, e) => ToolActivity?.Invoke(this, e);
     }
+
+    /// <summary>Raised around each tool execution so the HUD can show activity.</summary>
+    public event EventHandler<ToolActivityEventArgs>? ToolActivity;
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<string> StreamReplyAsync(
+    public IAsyncEnumerable<string> StreamReplyAsync(
         IReadOnlyList<ConversationTurn> conversation,
-        [EnumeratorCancellation] CancellationToken cancellationToken = default)
-    {
-        var parameters = new MessageCreateParams
-        {
-            Model = _model,
-            MaxTokens = _maxTokens,
-            System = _systemPrompt,
-            Messages = BuildMessages(conversation),
-        };
-
-        await foreach (RawMessageStreamEvent streamEvent in
-            _client.Messages.CreateStreaming(parameters).WithCancellation(cancellationToken))
-        {
-            if (streamEvent.TryPickContentBlockDelta(out RawContentBlockDeltaEvent? delta) &&
-                delta.Delta.TryPickText(out TextDelta? text) &&
-                !string.IsNullOrEmpty(text.Text))
-            {
-                yield return text.Text;
-            }
-        }
-    }
-
-    private static List<MessageParam> BuildMessages(IReadOnlyList<ConversationTurn> conversation)
-    {
-        var messages = new List<MessageParam>(conversation.Count);
-        foreach (ConversationTurn turn in conversation)
-        {
-            messages.Add(new MessageParam
-            {
-                Role = turn.Role == ConversationRole.User ? Role.User : Role.Assistant,
-                Content = turn.Text,
-            });
-        }
-        return messages;
-    }
+        CancellationToken cancellationToken = default) =>
+        _loop.StreamReplyAsync(conversation, cancellationToken);
 }

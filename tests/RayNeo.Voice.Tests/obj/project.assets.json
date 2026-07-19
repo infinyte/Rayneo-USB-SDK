@@ -1010,11 +1010,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\work\\Rayneo-USB-SDK\\tests\\RayNeo.Voice.Tests\\RayNeo.Voice.Tests.csproj",
+      "projectUniqueName": "e:\\work\\Rayneo-USB-SDK\\tests\\RayNeo.Voice.Tests\\RayNeo.Voice.Tests.csproj",
       "projectName": "RayNeo.Voice.Tests",
-      "projectPath": "E:\\work\\Rayneo-USB-SDK\\tests\\RayNeo.Voice.Tests\\RayNeo.Voice.Tests.csproj",
+      "projectPath": "e:\\work\\Rayneo-USB-SDK\\tests\\RayNeo.Voice.Tests\\RayNeo.Voice.Tests.csproj",
       "packagesPath": "C:\\Users\\kmitc\\.nuget\\packages\\",
-      "outputPath": "E:\\work\\Rayneo-USB-SDK\\tests\\RayNeo.Voice.Tests\\obj\\",
+      "outputPath": "e:\\work\\Rayneo-USB-SDK\\tests\\RayNeo.Voice.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1035,8 +1035,8 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj": {
-              "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj"
+            "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj": {
+              "projectPath": "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj"
             }
           }
         }

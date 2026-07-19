@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RayNeo.Hud")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33f750d6a32741d49a1e002e597a11941627550d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b1e09011fdde036d3cf53297655c12ce48717e0")]
 [assembly: System.Reflection.AssemblyProductAttribute("RayNeo.Hud")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RayNeo.Hud")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
