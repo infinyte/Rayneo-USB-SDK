@@ -1,0 +1,16 @@
+<Window x:Class="Infinyte.RayNeo.Hud.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RayNeo HUD"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        ShowActivated="False"
+        Topmost="True"
+        WindowStartupLocation="Manual">
+    <!-- Click-through is enforced via extended window styles in code-behind;
+         IsHitTestVisible keeps WPF hit-testing off as well. -->
+    <Canvas x:Name="Root" Background="Transparent" IsHitTestVisible="False" />
+</Window>

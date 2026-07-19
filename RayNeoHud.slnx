@@ -2,6 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/RayNeo.Console/RayNeo.Console.csproj" />
     <Project Path="src/RayNeo.Device/RayNeo.Device.csproj" />
+    <Project Path="src/RayNeo.Hud/RayNeo.Hud.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/RayNeo.Device.Tests/RayNeo.Device.Tests.csproj" />
