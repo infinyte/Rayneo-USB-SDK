@@ -8,6 +8,41 @@ Current implementation status for RayNeo HUD capabilities.
 - 🟡 Planned / pending implementation (explicitly called out in source/docs)
 - 🔴 Not started / future backlog
 
+## Compact capability table
+
+| Status | Area | Capability | Notes |
+|---|---|---|---|
+| 🟢 | Device | Vendor HID connection and open/lock handling | VID/PID detection with clear failure behavior |
+| 🟢 | Device | Background read loop | Validates report framing and dispatches IMU/ack frames |
+| 🟢 | Device | Command frame builder | `0x66 | cmd | value | payload` wire shape |
+| 🟢 | Device | IMU + ack decoding | Golden-vector IMU decode and command-ack decode covered by tests |
+| 🟢 | Device | Orientation filter core | Complementary filter with drift-corrected pitch/roll and gyro yaw |
+| 🟡 | Device | Magnetometer yaw fusion | Planned to reduce yaw drift |
+| 🟡 | Device | Empirical gyro-axis mapping lock-in | Finalize mapping using calibration motion validation |
+| 🟢 | Console | Live readout mode (`run`) | Orientation + temperature stream after tick-rate measure |
+| 🟢 | Console | Calibration mode (`calibrate`) | Nod/shake/roll RMS axis verification flow |
+| 🟢 | HUD | Click-through overlay window | Borderless, transparent, topmost, non-focus UX |
+| 🟢 | HUD | Display targeting and override | Native-match -> secondary -> primary, plus `--display N` |
+| 🟢 | HUD | HUD compositor | ~60 FPS screen-fixed + world-anchored rendering |
+| 🟢 | HUD | Orientation providers | Live device provider with simulated fallback |
+| 🟢 | Voice core | Interaction state machine | Exhaustive legal/illegal transition coverage |
+| 🟢 | Voice core | Push-to-talk orchestration | End-to-end loop control with fault handling |
+| 🟢 | Voice core | Barge-in behavior | Interrupt during thinking/streaming/speaking |
+| 🟢 | Voice core | Conversation history | Ordered turns with validation and clear support |
+| 🟢 | Assistant | Agentic tool-use loop | Multi-round execution, round limits, cancellation, activity events |
+| 🟢 | Assistant | Anthropic transport integration | Streamed partial JSON tool-argument accumulation |
+| 🟢 | Assistant | API key policy | Environment-only key sourcing via `ANTHROPIC_API_KEY` |
+| 🟢 | Tools | Timers | `start_timer`, `cancel_timer`, `list_timers` |
+| 🟢 | Tools | Session controls | `get_current_time`, `set_speech_muted`, `clear_conversation` |
+| 🟢 | Tools | HUD actions | `pin_note`, `list_pins`, `clear_pins`, `open_app_or_url` |
+| 🟡 | Tools | Pin lateral polarity final check | Live hardware validation and optional sign correction |
+| 🟢 | Speech/Input | System speech adapters | STT during hold-to-talk only; TTS output support |
+| 🟢 | Speech/Input | Global push-to-talk hook | System-wide key capture (default F8, configurable) |
+| 🟢 | Speech/Input | Voice HUD view | State, transcript, streaming reply, tool toasts, timer chips |
+| 🟡 | Speech/Input | Whisper STT backend | Planned behind `ISpeechToText` interface seam |
+| 🟢 | Quality | Automated tests and gates | Device/voice/tool/timer/state machine coverage; non-live runs pass without hardware |
+| 🔴 | Roadmap | Post-Whisper voice enhancement scope | Not yet defined in repository docs |
+
 ## Device layer (RayNeo.Device)
 
 - 🟢 Vendor HID connection and open/lock handling (VID/PID detection).
