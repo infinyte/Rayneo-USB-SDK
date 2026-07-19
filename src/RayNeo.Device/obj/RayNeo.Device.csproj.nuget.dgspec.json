@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {}
+    "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {}
   },
   "projects": {
-    "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
+    "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
+        "projectUniqueName": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
         "projectName": "RayNeo.Device",
-        "projectPath": "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
+        "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
         "packagesPath": "C:\\Users\\kmitc\\.nuget\\packages\\",
-        "outputPath": "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\obj\\",
+        "outputPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

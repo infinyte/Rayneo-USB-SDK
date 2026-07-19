@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CeiK79GAxZY=",
+  "dgSpecHash": "KbcQp8XeZ4g=",
   "success": true,
-  "projectFilePath": "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
+  "projectFilePath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kmitc\\.nuget\\packages\\hidsharp\\2.6.4\\hidsharp.2.6.4.nupkg.sha512"
   ],

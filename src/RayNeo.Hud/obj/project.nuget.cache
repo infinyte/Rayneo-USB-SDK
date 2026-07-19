@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sFE2BRKPSsQ=",
+  "dgSpecHash": "UPKsTEz6aiU=",
   "success": true,
-  "projectFilePath": "e:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj",
+  "projectFilePath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kmitc\\.nuget\\packages\\anthropic\\12.36.0\\anthropic.12.36.0.nupkg.sha512",
     "C:\\Users\\kmitc\\.nuget\\packages\\hidsharp\\2.6.4\\hidsharp.2.6.4.nupkg.sha512",
