@@ -73,6 +73,22 @@ public partial class MainWindow : Window
             hwnd, NativeMethods.HWND_TOPMOST,
             _target.Left, _target.Top, _target.Width, _target.Height,
             NativeMethods.SWP_NOACTIVATE | NativeMethods.SWP_SHOWWINDOW);
+
+        // A transparent, layered window (AllowsTransparency="True", required for
+        // click-through) doesn't reliably pick up a new monitor's DPI scale when
+        // placed programmatically via SetWindowPos instead of WPF's own
+        // Window.Width/Height path — observed live on a mixed-DPI rig (1920x1200
+        // @ 100% primary, 1920x1080 @ 150% glasses display): the root canvas's
+        // ActualHeight stayed out of sync with the true physical surface, so any
+        // HUD element anchored relative to canvas height (bottom-anchored chrome,
+        // the world-anchored crosshair) rendered outside the visible area while
+        // small-margin top-anchored elements still worked. Force the root
+        // canvas's size in DIPs from CompositionTarget's actual device-to-DIP
+        // transform — the same transform WPF uses to paint — so it can never be
+        // stale, regardless of DPI-change notification timing.
+        Matrix fromDevice = PresentationSource.FromVisual(this)!.CompositionTarget.TransformFromDevice;
+        Root.Width = _target.Width * fromDevice.M11;
+        Root.Height = _target.Height * fromDevice.M22;
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
