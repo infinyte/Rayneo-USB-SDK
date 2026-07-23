@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RayNeo.Device.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ccc6f0b1545b58a35e44b21adfe530d3a89c316f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b48a080cf4655ff50b29a00f8f9a0df9327ba2a2")]
 [assembly: System.Reflection.AssemblyProductAttribute("RayNeo.Device.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RayNeo.Device.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

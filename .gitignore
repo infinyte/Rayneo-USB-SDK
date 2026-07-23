@@ -50,3 +50,17 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/src/RayNeo.Console/obj
+/src/RayNeo.Console/obj
+/tests/RayNeo.Voice.Tests/obj
+/tests/RayNeo.Hud.Tests/obj
+/src/RayNeo.Console/obj
+/tests/RayNeo.Voice.Tests/obj
+/src/RayNeo.Console/obj
+/src/RayNeo.Device/obj
+/tests/RayNeo.Device.Tests/obj
+/tests/RayNeo.Voice.Tests/obj
+/tests/RayNeo.Voice.Tests/bin
+/src/RayNeo.Console/obj
+/src/RayNeo.Device/obj
+/tests/RayNeo.Device.Tests/bin
