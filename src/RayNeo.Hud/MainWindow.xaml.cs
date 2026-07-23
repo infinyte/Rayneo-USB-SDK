@@ -3,8 +3,9 @@
 // Author: Kurt Mitchell
 //
 // The overlay window: borderless, transparent, always-on-top, click-through,
-// placed full-screen on the target monitor. Builds the debug HUD scene, starts
-// the compositor, and brings up the voice stack (degrading to HUD-only with an
+// placed full-screen on the target monitor. Builds the HUD scene (a bundled
+// theme when one is selected, otherwise the built-in debug HUD), starts the
+// compositor, and brings up the voice stack (degrading to HUD-only with an
 // on-glass warning when voice cannot run).
 // -----------------------------------------------------------------------------
 
@@ -18,6 +19,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using Infinyte.RayNeo.Hud.Display;
 using Infinyte.RayNeo.Hud.Interop;
+using Infinyte.RayNeo.Hud.Theming;
 using Infinyte.RayNeo.Hud.Voice;
 
 namespace Infinyte.RayNeo.Hud;
@@ -33,17 +35,24 @@ public partial class MainWindow : Window
     private readonly IHeadOrientationProvider _provider;
     private readonly string? _warning;
     private readonly VoiceOptions _voiceOptions;
+    private readonly string? _themeReference;
     private HudCompositor? _compositor;
     private VoiceRuntime? _voice;
 
     /// <summary>Creates the overlay for a specific display and orientation source.</summary>
-    public MainWindow(DisplayInfo target, IHeadOrientationProvider provider, string? warning, VoiceOptions voiceOptions)
+    /// <param name="themeReference">
+    /// Optional theme name/folder/manifest path; null uses the built-in HUD.
+    /// </param>
+    public MainWindow(
+        DisplayInfo target, IHeadOrientationProvider provider, string? warning,
+        VoiceOptions voiceOptions, string? themeReference = null)
     {
         InitializeComponent();
         _target = target;
         _provider = provider;
         _warning = warning;
         _voiceOptions = voiceOptions;
+        _themeReference = themeReference;
 
         Loaded += OnLoaded;
         Closed += (_, _) =>
@@ -114,6 +123,46 @@ public partial class MainWindow : Window
 
     private void BuildScene(HudCompositor compositor, string? voiceWarning)
     {
+        // Build a bundled theme when one is selected; on any theme failure fall
+        // back to the built-in HUD and surface the reason on the glass.
+        string? themeWarning = null;
+        bool themed = false;
+        if (_themeReference is not null)
+        {
+            try
+            {
+                HudTheme theme = new HudThemeLoader().Load(_themeReference);
+                new HudThemeSceneBuilder(theme, compositor, _provider).Build();
+                themed = true;
+            }
+            catch (HudThemeException ex)
+            {
+                themeWarning = $"Theme '{_themeReference}' not loaded ({ex.Message}) — using built-in HUD.";
+            }
+        }
+
+        if (!themed)
+        {
+            BuildDefaultScene(compositor);
+        }
+
+        // Surface any startup warnings (no glasses / display fallback / voice off /
+        // theme fallback) as bottom-left chrome, whichever scene is active.
+        string? warning = Combine(Combine(_warning, voiceWarning), themeWarning);
+        if (warning is not null)
+        {
+            TextBlock warn = MakeText(15, FontWeights.Normal, WarningBrush);
+            warn.MaxWidth = 560;
+            warn.TextWrapping = TextWrapping.Wrap;
+            warn.Text = "⚠ " + warning;
+            compositor.Add(new ScreenFixedElement(warn, ScreenAnchor.BottomLeft, margin: 24));
+        }
+    }
+
+    // The built-in debug HUD: clock, connection status, live pitch/yaw/roll
+    // readout, and a world-anchored crosshair.
+    private void BuildDefaultScene(HudCompositor compositor)
+    {
         // ScreenFixed chrome: clock (top-centre) and connection status (top-left).
         TextBlock clock = MakeText(28, FontWeights.SemiBold, ChromeBrush);
         compositor.Add(new ScreenFixedElement(clock, ScreenAnchor.TopCenter, margin: 20,
@@ -138,17 +187,6 @@ public partial class MainWindow : Window
         compositor.Add(new WorldAnchoredElement(
             crosshair, width: 84, height: 84, anchorYawDeg: 0f, anchorPitchDeg: 0f,
             levelWithHorizon: true, anchorToFirstFrame: true));
-
-        // Surface any startup warnings (no glasses / display fallback / voice off).
-        string? warning = Combine(_warning, voiceWarning);
-        if (warning is not null)
-        {
-            TextBlock warn = MakeText(15, FontWeights.Normal, WarningBrush);
-            warn.MaxWidth = 560;
-            warn.TextWrapping = TextWrapping.Wrap;
-            warn.Text = "⚠ " + warning;
-            compositor.Add(new ScreenFixedElement(warn, ScreenAnchor.BottomLeft, margin: 24));
-        }
     }
 
     private static string? Combine(string? first, string? second)

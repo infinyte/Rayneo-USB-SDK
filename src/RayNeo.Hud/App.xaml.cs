@@ -3,7 +3,7 @@
 // Author: Kurt Mitchell
 //
 // Startup: parse args, pick the orientation source (live glasses or simulated),
-// pick the display and push-to-talk key, then show the overlay window.
+// pick the display, push-to-talk key, and HUD theme, then show the overlay.
 // -----------------------------------------------------------------------------
 
 using System;
@@ -14,6 +14,7 @@ using System.Text;
 using System.Windows;
 using Infinyte.RayNeo;
 using Infinyte.RayNeo.Hud.Display;
+using Infinyte.RayNeo.Hud.Theming;
 using Infinyte.RayNeo.Hud.Voice;
 
 namespace Infinyte.RayNeo.Hud;
@@ -29,6 +30,7 @@ public partial class App : Application
         int? requestedDisplay = ParseDisplayArg(e.Args);
         VoiceOptions voiceOptions = ParsePttArg(e.Args);
         voiceOptions = ApplySpeechEngineArgs(e.Args, voiceOptions);
+        ThemeSelection theme = HudThemeCommandLine.ParseTheme(e.Args);
 
         IReadOnlyList<DisplayInfo> displays = DisplayEnumerator.All();
         DisplaySelection selection = DisplayLocator.Choose(displays, requestedDisplay);
@@ -36,9 +38,9 @@ public partial class App : Application
         IHeadOrientationProvider provider = CreateProvider(out string? deviceWarning);
         string? warning = CombineWarnings(deviceWarning, selection.Warning);
 
-        LogStartup(displays, selection, deviceWarning, voiceOptions);
+        LogStartup(displays, selection, deviceWarning, voiceOptions, theme);
 
-        var window = new MainWindow(selection.Display, provider, warning, voiceOptions);
+        var window = new MainWindow(selection.Display, provider, warning, voiceOptions, theme.Reference);
         window.Show();
     }
 
@@ -46,7 +48,7 @@ public partial class App : Application
     // placement can be diagnosed without a console (this is a windowed app).
     private static void LogStartup(
         IReadOnlyList<DisplayInfo> displays, DisplaySelection selection, string? deviceWarning,
-        VoiceOptions voiceOptions)
+        VoiceOptions voiceOptions, ThemeSelection theme)
     {
         try
         {
@@ -54,6 +56,7 @@ public partial class App : Application
             sb.AppendLine($"[{DateTime.Now:HH:mm:ss}] RayNeo HUD startup");
             sb.AppendLine($"  device: {(deviceWarning is null ? "glasses connected" : deviceWarning)}");
             sb.AppendLine($"  push-to-talk: {voiceOptions.KeyName} (vk 0x{voiceOptions.VirtualKey:X2})");
+            sb.AppendLine($"  theme: {theme.Reference ?? "(built-in default)"}");
             sb.AppendLine($"  displays ({displays.Count}):");
             foreach (DisplayInfo d in displays)
             {

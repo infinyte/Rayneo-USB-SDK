@@ -24,4 +24,14 @@
     <ProjectReference Include="..\RayNeo.Voice\RayNeo.Voice.csproj" />
   </ItemGroup>
 
+  <!-- Bundled HUD themes: copied next to the executable so `--theme <name>`
+       resolves from the app's Themes folder out of the box. Drop-in themes the
+       user adds beside the exe (or points at with an absolute path / the
+       RAYNEO_HUD_THEME variable) are discovered the same way at runtime. -->
+  <ItemGroup>
+    <None Update="Themes\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
