@@ -1,4 +1,4 @@
-<Solution>
+<Solution xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Folder Name="/src/">
     <Project Path="src/RayNeo.Console/RayNeo.Console.csproj" />
     <Project Path="src/RayNeo.Device/RayNeo.Device.csproj" />

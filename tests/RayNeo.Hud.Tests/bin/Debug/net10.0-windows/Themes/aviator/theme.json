@@ -1,0 +1,51 @@
+{
+  "name": "aviator",
+  "author": "Kurt Mitchell",
+  "version": "1.0",
+  "description": "Sample RayNeo HUD theme: image crosshair, nine-slice status panel, and data-bound telemetry text. Uses a system font; drop a .ttf in this folder and set \"font\" to its file name to bundle a custom typeface.",
+  "defaults": {
+    "font": "Consolas",
+    "fontSize": 18,
+    "color": "#E8FBFF",
+    "glow": true
+  },
+  "elements": [
+    {
+      "type": "text",
+      "anchor": "top-center",
+      "margin": 20,
+      "format": "{clock:HH:mm:ss}",
+      "fontSize": 28,
+      "color": "#FFFFFF"
+    },
+    {
+      "type": "panel",
+      "anchor": "top-left",
+      "margin": 22,
+      "asset": "panel.png",
+      "width": 320,
+      "height": 52,
+      "slice": { "left": 24, "top": 24, "right": 24, "bottom": 24 },
+      "format": "● {status}   {temp:F1}°C",
+      "color": "#7FE9FF",
+      "fontSize": 16
+    },
+    {
+      "type": "text",
+      "anchor": "bottom-center",
+      "margin": 28,
+      "format": "pitch {pitch:F1}°      yaw {yaw:F1}°      roll {roll:F1}°",
+      "fontSize": 20,
+      "align": "center"
+    },
+    {
+      "type": "crosshair",
+      "anchor": "world",
+      "asset": "crosshair.png",
+      "width": 96,
+      "height": 96,
+      "levelWithHorizon": true,
+      "anchorToFirstFrame": true
+    }
+  ]
+}

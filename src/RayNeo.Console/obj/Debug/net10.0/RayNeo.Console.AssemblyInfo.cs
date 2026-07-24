@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RayNeo.Console")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b48a080cf4655ff50b29a00f8f9a0df9327ba2a2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+99a84b4ad364af79452e756b8a27fa453dc9f61f")]
 [assembly: System.Reflection.AssemblyProductAttribute("RayNeo.Console")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RayNeo.Console")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

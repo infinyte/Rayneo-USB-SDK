@@ -308,7 +308,7 @@ public sealed class HudThemeSceneBuilder
     private static double Opacity(HudThemeElement element) =>
         element.Opacity is { } o ? Math.Clamp(o, 0.0, 1.0) : 1.0;
 
-    private string AssetPath(string asset) => Path.Combine(_theme.Folder, asset);
+    private string AssetPath(string asset) => System.IO.Path.Combine(_theme.Folder, asset);
 
     private static BitmapImage LoadBitmap(string path)
     {
@@ -316,7 +316,7 @@ public sealed class HudThemeSceneBuilder
         bitmap.BeginInit();
         bitmap.CacheOption = BitmapCacheOption.OnLoad; // fully load now; do not lock the file
         bitmap.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-        bitmap.UriSource = new Uri(Path.GetFullPath(path), UriKind.Absolute);
+        bitmap.UriSource = new Uri(System.IO.Path.GetFullPath(path), UriKind.Absolute);
         bitmap.EndInit();
         bitmap.Freeze();
         return bitmap;

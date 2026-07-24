@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Console\\RayNeo.Console.csproj": {}
+    "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Console\\RayNeo.Console.csproj": {}
   },
   "projects": {
-    "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Console\\RayNeo.Console.csproj": {
+    "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Console\\RayNeo.Console.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Console\\RayNeo.Console.csproj",
+        "projectUniqueName": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Console\\RayNeo.Console.csproj",
         "projectName": "RayNeo.Console",
-        "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Console\\RayNeo.Console.csproj",
-        "packagesPath": "C:\\Users\\kmitc\\.nuget\\packages\\",
-        "outputPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Console\\obj\\",
+        "projectPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Console\\RayNeo.Console.csproj",
+        "packagesPath": "C:\\Users\\Kurt.Mitchell\\.nuget\\packages\\",
+        "outputPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Console\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\kmitc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Kurt.Mitchell\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,14 +26,16 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
+            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
-                "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj"
+              "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
+                "projectPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj"
               }
             }
           }
@@ -48,10 +50,11 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net10.0": {
+          "framework": "net10.0",
           "targetAlias": "net10.0",
           "imports": [
             "net461",
@@ -69,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -347,20 +350,20 @@
         }
       }
     },
-    "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
+    "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
+        "projectUniqueName": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
         "projectName": "RayNeo.Device",
-        "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
-        "packagesPath": "C:\\Users\\kmitc\\.nuget\\packages\\",
-        "outputPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\obj\\",
+        "projectPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
+        "packagesPath": "C:\\Users\\Kurt.Mitchell\\.nuget\\packages\\",
+        "outputPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\kmitc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Kurt.Mitchell\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -369,10 +372,12 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
+            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -387,10 +392,11 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net10.0": {
+          "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
             "HidSharp": {
@@ -414,7 +420,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
