@@ -1,19 +1,19 @@
 ﻿RayNeo.Hud
-1.0.0.0
+
 
 winexe
 C#
 .cs
-C:\Work\Rayneo-USB-SDK\src\RayNeo.Hud\obj\Debug\net10.0-windows\
+E:\work\Rayneo-USB-SDK\src\RayNeo.Hud\obj\Debug\net10.0-windows\
 RayNeo.Hud
 none
 false
 TRACE;DEBUG;NET;NET10_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NET10_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-C:\Work\Rayneo-USB-SDK\src\RayNeo.Hud\App.xaml
+E:\work\Rayneo-USB-SDK\src\RayNeo.Hud\App.xaml
 11407045341
 
-42-1071479948
-2271857261662
+40-1828534206
+227-71769857
 MainWindow.xaml;
 
 False

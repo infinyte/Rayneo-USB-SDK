@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj": {}
+    "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj": {}
   },
   "projects": {
-    "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
+    "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
+        "projectUniqueName": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
         "projectName": "RayNeo.Device",
-        "projectPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
-        "packagesPath": "C:\\Users\\Kurt.Mitchell\\.nuget\\packages\\",
-        "outputPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\obj\\",
+        "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj",
+        "packagesPath": "C:\\Users\\kmitc\\.nuget\\packages\\",
+        "outputPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Kurt.Mitchell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\kmitc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,12 +26,10 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
-            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -46,11 +44,10 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
             "HidSharp": {
@@ -74,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -352,20 +349,20 @@
         }
       }
     },
-    "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj": {
+    "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj",
+        "projectUniqueName": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj",
         "projectName": "RayNeo.Hud",
-        "projectPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj",
-        "packagesPath": "C:\\Users\\Kurt.Mitchell\\.nuget\\packages\\",
-        "outputPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\obj\\",
+        "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj",
+        "packagesPath": "C:\\Users\\kmitc\\.nuget\\packages\\",
+        "outputPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Kurt.Mitchell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\kmitc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -374,19 +371,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net10.0-windows": {
-            "framework": "net10.0-windows7.0",
+          "net10.0-windows7.0": {
             "targetAlias": "net10.0-windows",
             "projectReferences": {
-              "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
-                "projectPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj"
+              "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj": {
+                "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Device\\RayNeo.Device.csproj"
               },
-              "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj": {
-                "projectPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj"
+              "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj": {
+                "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj"
               }
             }
           }
@@ -401,11 +396,10 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
-        "net10.0-windows": {
-          "framework": "net10.0-windows7.0",
+        "net10.0-windows7.0": {
           "targetAlias": "net10.0-windows",
           "dependencies": {
             "NAudio": {
@@ -444,7 +438,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -738,20 +732,20 @@
         }
       }
     },
-    "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj": {
+    "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj",
+        "projectUniqueName": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj",
         "projectName": "RayNeo.Voice",
-        "projectPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj",
-        "packagesPath": "C:\\Users\\Kurt.Mitchell\\.nuget\\packages\\",
-        "outputPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\obj\\",
+        "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\RayNeo.Voice.csproj",
+        "packagesPath": "C:\\Users\\kmitc\\.nuget\\packages\\",
+        "outputPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Voice\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Kurt.Mitchell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\kmitc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -760,12 +754,10 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
-            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -780,11 +772,10 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
             "Anthropic": {
@@ -808,7 +799,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

@@ -267,3 +267,6 @@ C:\Work\Rayneo-USB-SDK\tests\RayNeo.Hud.Tests\obj\Debug\net10.0-windows\refint\R
 C:\Work\Rayneo-USB-SDK\tests\RayNeo.Hud.Tests\obj\Debug\net10.0-windows\RayNeo.Hud.Tests.pdb
 C:\Work\Rayneo-USB-SDK\tests\RayNeo.Hud.Tests\obj\Debug\net10.0-windows\RayNeo.Hud.Tests.genruntimeconfig.cache
 C:\Work\Rayneo-USB-SDK\tests\RayNeo.Hud.Tests\obj\Debug\net10.0-windows\ref\RayNeo.Hud.Tests.dll
+E:\work\Rayneo-USB-SDK\tests\RayNeo.Hud.Tests\bin\Debug\net10.0-windows\Themes\aviator\crosshair.png
+E:\work\Rayneo-USB-SDK\tests\RayNeo.Hud.Tests\bin\Debug\net10.0-windows\Themes\aviator\panel.png
+E:\work\Rayneo-USB-SDK\tests\RayNeo.Hud.Tests\bin\Debug\net10.0-windows\Themes\aviator\theme.json

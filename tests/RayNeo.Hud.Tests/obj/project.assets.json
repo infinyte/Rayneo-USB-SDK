@@ -1,7 +1,7 @@
 {
-  "version": 4,
+  "version": 3,
   "targets": {
-    "net10.0-windows": {
+    "net10.0-windows7.0": {
       "Anthropic/12.36.0": {
         "type": "package",
         "dependencies": {
@@ -1528,7 +1528,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net10.0-windows": [
+    "net10.0-windows7.0": [
       "Microsoft.NET.Test.Sdk >= 17.14.1",
       "RayNeo.Hud >= 1.0.0",
       "coverlet.collector >= 6.0.4",
@@ -1537,23 +1537,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Kurt.Mitchell\\.nuget\\packages\\": {},
+    "C:\\Users\\kmitc\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Work\\Rayneo-USB-SDK\\tests\\RayNeo.Hud.Tests\\RayNeo.Hud.Tests.csproj",
+      "projectUniqueName": "E:\\work\\Rayneo-USB-SDK\\tests\\RayNeo.Hud.Tests\\RayNeo.Hud.Tests.csproj",
       "projectName": "RayNeo.Hud.Tests",
-      "projectPath": "C:\\Work\\Rayneo-USB-SDK\\tests\\RayNeo.Hud.Tests\\RayNeo.Hud.Tests.csproj",
-      "packagesPath": "C:\\Users\\Kurt.Mitchell\\.nuget\\packages\\",
-      "outputPath": "C:\\Work\\Rayneo-USB-SDK\\tests\\RayNeo.Hud.Tests\\obj\\",
+      "projectPath": "E:\\work\\Rayneo-USB-SDK\\tests\\RayNeo.Hud.Tests\\RayNeo.Hud.Tests.csproj",
+      "packagesPath": "C:\\Users\\kmitc\\.nuget\\packages\\",
+      "outputPath": "E:\\work\\Rayneo-USB-SDK\\tests\\RayNeo.Hud.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Kurt.Mitchell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\kmitc\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1562,16 +1562,14 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net10.0-windows": {
-          "framework": "net10.0-windows7.0",
+        "net10.0-windows7.0": {
           "targetAlias": "net10.0-windows",
           "projectReferences": {
-            "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj": {
-              "projectPath": "C:\\Work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj"
+            "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj": {
+              "projectPath": "E:\\work\\Rayneo-USB-SDK\\src\\RayNeo.Hud\\RayNeo.Hud.csproj"
             }
           }
         }
@@ -1586,11 +1584,10 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.300"
+      "SdkAnalysisLevel": "10.0.200"
     },
     "frameworks": {
-      "net10.0-windows": {
-        "framework": "net10.0-windows7.0",
+      "net10.0-windows7.0": {
         "targetAlias": "net10.0-windows",
         "dependencies": {
           "Microsoft.NET.Test.Sdk": {
@@ -1629,7 +1626,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

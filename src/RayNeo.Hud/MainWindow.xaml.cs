@@ -11,6 +11,7 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -83,21 +84,70 @@ public partial class MainWindow : Window
             _target.Left, _target.Top, _target.Width, _target.Height,
             NativeMethods.SWP_NOACTIVATE | NativeMethods.SWP_SHOWWINDOW);
 
-        // A transparent, layered window (AllowsTransparency="True", required for
-        // click-through) doesn't reliably pick up a new monitor's DPI scale when
-        // placed programmatically via SetWindowPos instead of WPF's own
-        // Window.Width/Height path — observed live on a mixed-DPI rig (1920x1200
-        // @ 100% primary, 1920x1080 @ 150% glasses display): the root canvas's
-        // ActualHeight stayed out of sync with the true physical surface, so any
-        // HUD element anchored relative to canvas height (bottom-anchored chrome,
-        // the world-anchored crosshair) rendered outside the visible area while
-        // small-margin top-anchored elements still worked. Force the root
-        // canvas's size in DIPs from CompositionTarget's actual device-to-DIP
-        // transform — the same transform WPF uses to paint — so it can never be
-        // stale, regardless of DPI-change notification timing.
-        Matrix fromDevice = PresentationSource.FromVisual(this)!.CompositionTarget.TransformFromDevice;
-        Root.Width = _target.Width * fromDevice.M11;
-        Root.Height = _target.Height * fromDevice.M22;
+        // Size the root canvas in DIPs from the *physical* monitor size and the
+        // monitor's DPI scale (DIP = physical / scale). This is DPI-critical:
+        //
+        // The window is created on the primary monitor (this app is
+        // PerMonitorV2-aware), then moved to the glasses' 150%-scaled display by
+        // the SetWindowPos above. Windows reports the new scale via WM_DPICHANGED,
+        // but that message is delivered and processed AFTER OnSourceInitialized
+        // returns — so reading the DPI transform *here* still yields the primary's
+        // 100% scale. A one-shot read at this point therefore over-sizes the
+        // canvas by the scale ratio (e.g. a 1080-px-tall display becomes a
+        // 1080-DIP canvas instead of 720), pushing every bottom- and
+        // right-anchored element off the visible surface while fixed top-left
+        // chrome still shows. Observed live on a 1920x1200@100% primary +
+        // 1920x1080@150% glasses rig: the pitch/yaw/roll readout and warning
+        // banner rendered below the bottom edge.
+        //
+        // Fix: recompute on every DPI and size change, using the scale that is
+        // correct at that moment (the DpiChanged event carries it; VisualTreeHelper
+        // reports the current one otherwise). The compositor reads the canvas size
+        // each frame, so the scene self-corrects as soon as the real scale lands.
+        DpiScale initial = VisualTreeHelper.GetDpi(this);
+        SetCanvasSize(initial.DpiScaleX, initial.DpiScaleY, "init");
+        DpiChanged += OnDpiChanged;
+        SizeChanged += OnWindowSizeChanged;
+    }
+
+    private void OnDpiChanged(object? sender, DpiChangedEventArgs e) =>
+        SetCanvasSize(e.NewDpi.DpiScaleX, e.NewDpi.DpiScaleY, "dpi-changed");
+
+    private void OnWindowSizeChanged(object? sender, SizeChangedEventArgs e)
+    {
+        DpiScale dpi = VisualTreeHelper.GetDpi(this);
+        SetCanvasSize(dpi.DpiScaleX, dpi.DpiScaleY, "size-changed");
+    }
+
+    // Root canvas size in DIPs = physical monitor size / DPI scale.
+    private void SetCanvasSize(double scaleX, double scaleY, string reason)
+    {
+        if (scaleX <= 0 || scaleY <= 0)
+        {
+            return;
+        }
+        Root.Width = _target.Width / scaleX;
+        Root.Height = _target.Height / scaleY;
+        LogDpi(reason, scaleX, scaleY);
+    }
+
+    // Diagnostic breadcrumb so canvas sizing can be verified without a console.
+    // Appends to %TEMP%\rayneo-hud-dpi.log; never allowed to break rendering.
+    private void LogDpi(string reason, double scaleX, double scaleY)
+    {
+        try
+        {
+            string line =
+                $"[{DateTime.Now:HH:mm:ss.fff}] {reason}: scale=({scaleX:F3},{scaleY:F3}) " +
+                $"target={_target.Width}x{_target.Height} " +
+                $"root={Root.Width:F0}x{Root.Height:F0} " +
+                $"window={ActualWidth:F0}x{ActualHeight:F0}" + Environment.NewLine;
+            File.AppendAllText(Path.Combine(Path.GetTempPath(), "rayneo-hud-dpi.log"), line);
+        }
+        catch
+        {
+            // Diagnostics only — never let logging break rendering.
+        }
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
